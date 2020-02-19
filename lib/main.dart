@@ -26,7 +26,19 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  String url = 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fchurchmediadrop.com%2Fdownloads%2Fgradient-cosmos-stills-pack%2F&psig=AOvVaw3576jbHPH97gX7VFmhoRWL&ust=1582215936661000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCNCGiPWD3ucCFQAAAAAdAAAAABAF';
+
+  String _username, _password, errorMessage = '';
+
+  void checkAccount(){
+    if(_username == 'demo@demo.com' && _password == 'password'){
+      _launchURL();
+    }
+    else {
+      setState(() {
+        errorMessage = 'Wrong Username or Password';
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -87,6 +99,9 @@ class _MyHomePageState extends State<MyHomePage> {
                             Padding(
                               padding: const EdgeInsets.symmetric(horizontal: 10.0),
                               child: TextField(
+                                onChanged: (text){
+                                  _username = text;
+                                },
                                 decoration: InputDecoration(
                                   hintText: 'Username',
                                   filled: true,
@@ -109,6 +124,10 @@ class _MyHomePageState extends State<MyHomePage> {
                             Padding(
                               padding: const EdgeInsets.symmetric(horizontal: 10.0),
                               child: TextField(
+                                onChanged: (text) {
+                                  _password = text;
+                                },
+                                obscureText: true,
                                 decoration: InputDecoration(
                                   hintText: 'Password',
                                   filled: true,
@@ -125,11 +144,16 @@ class _MyHomePageState extends State<MyHomePage> {
                                 ),
                               ),
                             ),
-                            SizedBox(
-                              height: 40.0,
+                            SizedBox(height: 20.0),
+                            Text(
+                              '$errorMessage',
+                              style: TextStyle(
+                                color: Colors.red,
+                              ),
                             ),
+                            SizedBox(height: 20.0),
                             RaisedButton(
-                              onPressed: () => _launchURL(),
+                              onPressed: () => checkAccount(),
                               color: Colors.blue,
                               child: Text(
                                 'Login',
